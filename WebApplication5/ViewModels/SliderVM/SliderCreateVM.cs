@@ -9,5 +9,6 @@ public class SliderCreateVM
     public string Title { get; set; }
     [Required, MinLength(3), MaxLength(128), DataType("varchar")]
     public string Text { get; set; }
-    public byte Position { get; set; }
+    [Required]
+    public sbyte Position { get; set; }
 }

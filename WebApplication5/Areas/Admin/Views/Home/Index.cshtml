@@ -1,4 +1,4 @@
-﻿
+﻿@model SliderCreateVM
 @{
     ViewData["Title"] = "Slider";
 }
@@ -64,8 +64,8 @@
                             <td>item.Title</td>
                             <td>item.Text</td>
                             <td><img width="200" src="#" /></td>
-                            <td class="text-center"><a class="btn btn-outline-info" asp-action="Update" asp-route-id="#">Update</a></td>
-                            <td class="text-center"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="#">Delete</a></td>
+                            <td class="text-center"><a class="btn btn-outline-info" asp-action="Update" asp-route-id="Model.Id">Update</a></td>
+                        <td class="text-center"><a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="Model.Id">Delete</a></td>
                         </tr>
                    
                 </tbody>
