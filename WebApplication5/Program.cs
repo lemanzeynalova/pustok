@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Pustok.Contexts;
+
 namespace WebApplication5
 {
     public class Program
@@ -8,6 +11,10 @@ namespace WebApplication5
 
          
             builder.Services.AddRazorPages();
+            builder.Services.AddDbContext<PustokDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration["ConnectionStrings:MSSql"]);
+            });
 
             var app = builder.Build();
 
@@ -26,7 +33,7 @@ namespace WebApplication5
 
             app.UseAuthorization();
             app.MapControllerRoute(
-            name: "Admin",
+            name: "areas",
             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
           );
 

@@ -10,10 +10,16 @@ namespace WebApplication5.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController(PustokDbContext db)
+        {
+            _db = db;
+        }
+
+        PustokDbContext _db {  get; set; }
         public async Task<IActionResult> Index()
         {
-            using PustokDbContext db = new PustokDbContext();
-            var sliders = await db.sliders.ToListAsync();
+            
+            var sliders = await _db.Sliders.ToListAsync();
             List<SliderListItemVM> items = new List<SliderListItemVM>();
             foreach(var sItem in sliders)
             {
@@ -26,7 +32,7 @@ namespace WebApplication5.Controllers
                     Title = sItem.Title,
                 });
             }
-            db.sliders.Select(s=>new SliderListItemVM
+            _db.Sliders.Select(s=>new SliderListItemVM
             {
                 Title = s.Title,
                 Text = s.Text,
@@ -51,7 +57,7 @@ namespace WebApplication5.Controllers
             {
                 return View(vm);
             }
-            using PustokDbContext dbContext = new PustokDbContext();
+            
             Slider slider = new Slider()
             {
                 Title = vm.Title,
@@ -64,19 +70,19 @@ namespace WebApplication5.Controllers
                     1 => false
                 }
             };
-            await dbContext.sliders.AddAsync(slider);
-            await dbContext.SaveChangesAsync();
+            await _db.Sliders.AddAsync(slider);
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Delete(int? id)
         {
             TempData["Response"] = false;
             if (id == null) return BadRequest();
-            using PustokDbContext db = new();
-            var data = await db.sliders.FindAsync(id);
+           
+            var data = await _db.Sliders.FindAsync(id);
             if (data == null) RedirectToAction(nameof(Index));
-            db.sliders.Remove(data);
-            await db.SaveChangesAsync();
+            _db.Sliders.Remove(data);
+            await _db.SaveChangesAsync();
             TempData["Response"] = true;
             return RedirectToAction(nameof(Index));
         }

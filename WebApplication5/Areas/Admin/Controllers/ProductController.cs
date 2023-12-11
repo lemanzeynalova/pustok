@@ -7,10 +7,16 @@ namespace Pustok.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {
+        public ProductController(PustokDbContext db)
+        {
+            _db = db;
+        }
+
+        PustokDbContext _db {  get; set; }  
         public async Task<IActionResult> Index()
         {
-            using PustokDbContext db = new PustokDbContext();
-            return View(await db.sliders.ToListAsync());
+           
+            return View(await _db.Sliders.ToListAsync());
         }
     }
 }
