@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 using Pustok.Contexts;
+using Pustok.Helpers;
 
 namespace WebApplication5
 {
@@ -15,7 +17,7 @@ namespace WebApplication5
             {
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:MSSql"]);
             });
-
+            builder.Services.AddScoped<LayoutService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
