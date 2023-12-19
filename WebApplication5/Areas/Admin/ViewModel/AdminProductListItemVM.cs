@@ -19,5 +19,6 @@ namespace Pustok.Areas.Admin.ViewModel
         public string ImageUrl { get; set; }
         public Category? Category { get; set; }
         public bool IsDeleted { get; set; }
+
     }
 }

@@ -17,6 +17,9 @@ namespace WebApplication5
             {
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:MSSql"]);
             });
+            builder.Services.AddSession();
+
+            //builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<LayoutService>();
             var app = builder.Build();
 
@@ -35,6 +38,15 @@ namespace WebApplication5
 
             app.UseAuthorization();
             app.MapControllerRoute(
+             name: "shop",
+             pattern: "magaza",
+             defaults: new
+          {
+              Controller = "Shop",
+              Action = "Index"
+             }
+           );
+            app.MapControllerRoute(
             name: "areas",
             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
           );
@@ -42,6 +54,7 @@ namespace WebApplication5
             app.MapControllerRoute(
              name: "default",
              pattern: "{controller=Home}/{action=Index}/{id?}");
+            PathConstants.RootPath = builder.Environment.WebRootPath;
 
             app.MapRazorPages();
 
